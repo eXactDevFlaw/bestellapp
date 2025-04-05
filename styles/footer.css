@@ -1,0 +1,26 @@
+footer {
+    height: 100px;
+    width: 100%;
+    background-color: rgb(255, 127, 0);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+    color: white;
+    margin-top: 8px;
+}
+
+footer a {
+    color: white;
+    cursor: pointer;
+}
+
+footer a:hover{
+    transition: 150ms;
+    text-decoration: underline;
+}
+
+.footer_break{
+    margin-left: 8px;
+    margin-right: 8px;
+}

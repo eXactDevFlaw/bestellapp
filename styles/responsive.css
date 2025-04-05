@@ -1,0 +1,33 @@
+@media (min-width:901px){
+    .resp_basket_wrapper{
+        display: none;
+    }
+
+    .resp_basket_wrapper_overlay{
+        display: none;
+    }
+}
+
+@media (max-width: 900px) {
+    .basket_wrapper {
+        display: none;
+    }
+
+    .content_wrapper {
+        width: 100%;
+    }
+
+    .shop_logo {
+        left: calc(50% - 50px);
+    }
+
+    .resp_basket_wrapper {
+        position: sticky;
+        display: flex;
+        justify-content: center;
+        margin-top: 8px;
+        bottom: 8px;
+    }
+
+
+}
