@@ -1,5 +1,5 @@
 @media (min-width:901px){
-    .resp_basket_wrapper{
+    .resp_basket_btn_wrapper{
         display: none;
     }
 
@@ -21,7 +21,7 @@
         left: calc(50% - 50px);
     }
 
-    .resp_basket_wrapper {
+    .resp_basket_btn_wrapper {
         position: sticky;
         display: flex;
         justify-content: center;

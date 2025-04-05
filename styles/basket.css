@@ -132,7 +132,7 @@
 
     margin-bottom: 8px;
 }
-.resp_basket_wrapper_content {
+.resp_basket_btn {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -146,7 +146,7 @@
     margin-right: 8px;
 }
 
-.resp_basket_wrapper_content:hover {
+.resp_basket_btn :hover {
     background: linear-gradient(to bottom, rgba(200, 200, 200, 0.7) 5%, #ffffff 100%);
     background-color: rgba(200, 200, 200, 0.7);
     border: 1px solid;

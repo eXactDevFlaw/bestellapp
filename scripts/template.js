@@ -14,7 +14,7 @@ function getCompanyTemplate() {
 function getNavigationTemplate(categorie) {
   return /*HTML*/ `
         <div class="nav_bar_btn max_width_960px">
-        <a href="#${categorie}"><h3>${categorie} </h3></a> 
+        <a href="#${categorie}"><h4>${categorie}</h4></a> 
         </div>`;
 }
 
@@ -67,37 +67,39 @@ function getItemTemplate(amount, itemName, itemPrice) {
       <div class="basket_item">
           <h3>${itemName}</h3>
           <div class="basket_item_content">
-          <button onclick="reduceItem(event)">-</button>
+          <button id="${itemName}" onclick="reduceItem(event)">-</button>
           <span>${amount}</span>
-          <button onclick="increaseItem(event)">+</button>
+          <button id="${itemName}" onclick="increaseItem(event)">+</button>
           <span>${updateFormat(itemPrice)}</span>
-          <button onclick="deleteItem(event)"><img src="./assets/icons/trashcan.png" alt="trashcan"></button>          
+          <button id="${itemName}" onclick="deleteItem(event)"><img src="./assets/icons/trashcan.png" alt="trashcan"></button>          
           </div>
       </div>    
   `;
 }
 
-function getEmptyBasketTemplate(){
+function getEmptyBasketTemplate() {
   return /*HTML*/ `
     <div class="empty_basket">
       <h3>Dein Warenkorb ist leer!</h3>
       <img src="./assets/icons/basket_icon.png" alt="basket_icon">
       <span>Bitte füge Produkte hinzu.</span>
     </div>  
-  `
+  `;
 }
 
 function getSummaryTemplate(totalPrice) {
   return /*html*/ `
           <div class="basket_bottom">
-              <div class="summary">Der Gesamtpreis beträg: ${updateFormat(totalPrice)}</div>
+              <div class="summary">Der Gesamtpreis beträg: ${updateFormat(
+                totalPrice
+              )}</div>
               <button class="order_btn" onclick="orderBasket(event)">Warenkorb Bestellen</button>
           </div>
       `;
 }
 
 function getAlertTemplate(totalPrice) {
-    return /*HTML*/ `
+  return /*HTML*/ `
       <div class="alert">
           <h1>Danke für die Bestellung!</h1>
           <div class="alert_input">Vielen lieben Dank für deine Bestellung im Wert von 
@@ -107,4 +109,13 @@ function getAlertTemplate(totalPrice) {
           <button onclick="closeOrderBasket()">Alles klärchen!</button>
       </div>    
       `;
-  }
+}
+
+function getRespBasketTemplate(totalAmount) {
+  return /*HTML*/ `
+          <div class="resp_basket_btn" onclick="respBasketOverlay(event)">
+              <span>Warenkorb&nbsp;</span>
+              ${totalAmount ? `<span>(${totalAmount})</span>` : ""}
+          </div>
+      `;
+}

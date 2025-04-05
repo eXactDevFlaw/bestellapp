@@ -1,4 +1,3 @@
-// Globale Variablen
 let companyRef = document.getElementById("company");
 let navigationRef = document.getElementById("nav_bar");
 let contentRef = document.getElementById("content");
@@ -22,11 +21,10 @@ function renderHead() {
 
 function renderBasket() {
   basketRef.innerHTML += getBasketTemplate();
-  let emptyBasketRef = document.getElementById('basket_items')
-  console.log(basket)
-  if(basket.length === 0){
-    emptyBasketRef.innerHTML = getEmptyBasketTemplate();
-  }
+}
+
+function renderRespBasket(totalAmount){
+  respBasketBtnRef.innerHTML = getRespBasketTemplate(totalAmount)
 }
 
 function renderContent() {
@@ -57,52 +55,82 @@ function addToBasket(event) {
   }
 }
 
-function renderBasketItem(name, price){
-  let existItem = basket.find(item => item.name === name);
-  
-  if (existItem){
+function renderBasketItem(name, price) {
+  let existItem = basket.find((item) => item.name === name);
+
+  if (existItem) {
     existItem.amount++;
-    let sumPrice = existItem.amount * price
-    existItem.price = sumPrice
-  }else{
-    basket.push({name, price, amount: 1});
+    existItem.price = existItem.basePrice * existItem.amount;
+  } else {
+    basket.push({ name, basePrice: price, amount: 1, price: price });
   }
-  updateBasket()
+  updateBasket();
 }
-  
-function updateBasket(){
-  let itemRef = document.getElementById('basket_items')
+
+function updateBasket() {
+  let itemRef = document.getElementById("basket_items");
+  let summaryRef = document.getElementById("basket_summary");
   itemRef.innerHTML = "";
-  let summary = 0;
+  summaryRef.innerHTML = "";
 
-  basket.forEach(item => {
-    itemRef.innerHTML += getItemTemplate(item.amount, item.name, item.price);
-    let itemSummary = item.price
-    summary += itemSummary
-  })
-  basketPrice = summary
-  renderBasketSummary(summary)
-  localStorage.setItem('basketValues', JSON.stringify(basket))
+  if (basket.length === 0) {
+    itemRef.innerHTML = getEmptyBasketTemplate();
+  } else {
+    let summary = 0;
+    let totalAmount = 0;
+    basket.forEach((item) => {
+      item.price = item.basePrice * item.amount;
+      console.log(item.price)
+      itemRef.innerHTML += getItemTemplate(item.amount, item.name, item.price);
+      summary += item.price;
+      totalAmount += item.amount;
+    });
+    basketPrice = summary;
+    renderBasketSummary(summary);
+    renderRespBasket(totalAmount);
+  }
+  localStorage.setItem("basketValues", JSON.stringify(basket));
 }
 
-function increaseItem(event){
-  let btnRef = event.srcElement.id
+function increaseItem(event) {
+  let itemID = event.srcElement.id;
+  let existItem = basket.find((item) => item.name === itemID);
+  existItem.amount++;
+  existItem.price = existItem.basePrice * existItem.amount;
+  updateBasket();
 }
 
-function reduceItem(event){
-
+function reduceItem(event) {
+  let itemID = event.srcElement.id;
+  let existItem = basket.find((item) => item.name === itemID);
+  let index = basket.findIndex((item) => item.name === itemID);
+  if (existItem.amount > 1) {
+    existItem.amount--;
+    existItem.price = existItem.basePrice * existItem.amount;
+  } else {
+    if (index > -1) {
+      basket.splice(index, 1);
+    }
+  }
+  updateBasket();
 }
 
-function deleteItem(event){
-
+function deleteItem(event) {
+  let itemID = event.target.id;
+  let index = basket.findIndex(item => item.name === itemID);
+  
+  if (index > -1) {
+    basket.splice(index, 1);
+    updateBasket();
+  }
 }
 
-function renderBasketSummary(totalPrice){
-  let summaryRef = document.getElementById('basket_summary')
-  summaryRef.innerHTML = getSummaryTemplate(totalPrice)
+function renderBasketSummary(totalPrice) {
+  let summaryRef = document.getElementById("basket_summary");
+  summaryRef.innerHTML = getSummaryTemplate(totalPrice);
 }
 
-function updateFormat(inputFormat){
+function updateFormat(inputFormat) {
   let currency = inputFormat.toFixed(2).replace(".", ",") + " €";
   return currency;
 }
@@ -111,25 +139,21 @@ function orderBasket(event) {
   alertRef.classList.remove("d_none");
   alertRef.innerHTML = getAlertTemplate(basketPrice);
   document.body.style.overflow = "hidden";
-  
+  localStorage.removeItem("basketValues");
 }
 
-function closeOrderBasket(){
+function closeOrderBasket() {
   alertRef.classList.add("d_none");
-  basket = [];
-  updateBasket()
   document.body.style.overflow = "visible";
+  basket = [];
+  basketPrice = 0;
+  updateBasket();
 }
 
-function loadFromLocalStorage(){
-  let basketValues = JSON.parse(localStorage.getItem("basketValues"))
-  console.log(basketValues)
-  if(basketValues !== null){
-    basket = basketValues
-    console.log(basket)
-    console.log("es hat geklappt aber irgendwas ist falsch")
-  }else{
-    console.log("du musst das schaffen! dussel")
+function loadFromLocalStorage() {
+  let basketValues = JSON.parse(localStorage.getItem("basketValues"));
+  if (basketValues) {
+    basket = basketValues;
+    updateBasket();
   }
 }
-
