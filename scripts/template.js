@@ -13,7 +13,7 @@ function getCompanyTemplate() {
 
 function getNavigationTemplate(categorie) {
   return /*HTML*/ `
-        <div class="nav_bar max_width_960px">
+        <div class="nav_bar_btn max_width_960px">
         <a href="#${categorie}"><h3>${categorie} </h3></a> 
         </div>`;
 }
@@ -31,7 +31,7 @@ function getSectionTemplate(categorie) {
 
 function getItemsTemplate(item) {
   return /*HTML*/ `
-        <div>
+        <div class="max_width_960px">
           <div id="dishes" class="dishes max_width_960px">
               <div class="dish">
                   <h3>${item.name}</h3>
@@ -65,28 +65,32 @@ function getBasketTemplate() {
 function getItemTemplate(amount, itemName, itemPrice) {
   return /*html*/ ` 
       <div class="basket_item">
-          <div class="basket_table">
-          <table>
-              <tbody>
-              <td>${amount} x</td>
-              <td>${itemName} </td>
-              <td>${updateFormat(itemPrice)}</td>
-              </tbody>
-          </table>
-          </div>
-          <div>
-          <button onclick="deleteItem(event)">D</button>
-          <button onclick="increaseItem(event)">+</button>
+          <h3>${itemName}</h3>
+          <div class="basket_item_content">
           <button onclick="reduceItem(event)">-</button>
+          <span>${amount}</span>
+          <button onclick="increaseItem(event)">+</button>
+          <span>${updateFormat(itemPrice)}</span>
+          <button onclick="deleteItem(event)"><img src="./assets/icons/trashcan.png" alt="trashcan"></button>          
           </div>
       </div>    
   `;
 }
 
+function getEmptyBasketTemplate(){
+  return /*HTML*/ `
+    <div class="empty_basket">
+      <h3>Dein Warenkorb ist leer!</h3>
+      <img src="./assets/icons/basket_icon.png" alt="basket_icon">
+      <span>Bitte füge Produkte hinzu.</span>
+    </div>  
+  `
+}
+
 function getSummaryTemplate(totalPrice) {
   return /*html*/ `
           <div class="basket_bottom">
-              <div class="summary"><h3>Der Gesamtpreis beträg: ${updateFormat(totalPrice)}</h3></div>
+              <div class="summary">Der Gesamtpreis beträg: ${updateFormat(totalPrice)}</div>
               <button class="order_btn" onclick="orderBasket(event)">Warenkorb Bestellen</button>
           </div>
       `;

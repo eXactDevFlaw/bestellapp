@@ -48,6 +48,11 @@ body {
     margin-bottom: 8px;
 }
 
+.nav_bar_btn:hover{
+    cursor: pointer;
+    text-decoration: underline;
+}
+
 .section_head {
     padding: 8px;
 }
@@ -84,6 +89,11 @@ body {
     flex-direction: column;
     margin: 0;
     padding: 8px;
+}
+
+.dish h3{
+    margin-block-start: 8px;
+    margin-block-end: 8px;
 }
 
 .alert_dialog {

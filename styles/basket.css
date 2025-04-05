@@ -16,6 +16,11 @@
     text-align: center;
 }
 
+.basket_dishes{
+    height: 75vh;
+    overflow: auto;
+}
+
 .basket_underline {
     border: 2px solid rgba(200, 200, 200, 0.7);
 }
@@ -23,18 +28,28 @@
 .basket_item {
     margin-top: 8px;
     display: flex;
-    justify-content: space-between;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+.basket_item h3 {
+    margin-block-start: 8px;
+    margin-block-end: 8px;
 }
 
 .basket_item button {
-    height: 20px;
-    width: 20px;
+    height: 40px;
+    width: 40px;
     background-color: rgb(255, 127, 0);
-    border: 0;
-    font-size: 10px;
+    font-size: 24px;
+    border: 1px solid rgb(200, 200, 200);
     color: white;
     cursor: pointer;
-    border-radius: 16px;
+    border-radius: 50%;
+    margin-left: 8px;
+    margin-right: 8px;
 }
 
 .basket_item button:hover {
@@ -49,16 +64,28 @@
     top: 1px;
 }
 
+.basket_item img {
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+}
+
+.basket_item_content{
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+}
+
 .add_chart_button {
-    height: 32px;
-    width: 32px;
+    height: 40px;
+    width: 40px;
     background-color: rgb(255, 127, 0);
-    border: 0;
+    border: 1px solid rgb(200, 200, 200);
     font-size: 24px;
     color: white;
     cursor: pointer;
-    border-radius: 16px;
-    margin-right: 8px;
+    border-radius: 50%;
+    margin: 8px;
 }
 
 .add_chart_button:hover {
@@ -92,12 +119,19 @@
 }
 
 .basket_bottom {
+    margin-top: 16px;
+    margin-bottom: 8px;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
 }
 
+.summary{
+    text-decoration: overline;
+
+    margin-bottom: 8px;
+}
 .resp_basket_wrapper_content {
     display: flex;
     justify-content: center;
@@ -142,4 +176,16 @@
     width: clamp(200px, 80vw, 400px);
     margin: 100px auto;
     padding: 16px;
+}
+
+.empty_basket {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.empty_basket img {
+    width: 100px;
+
 }

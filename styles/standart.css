@@ -10,6 +10,26 @@ a {
     color: rgb(0, 0, 0);
     text-decoration: none;
 }
+
+h1 {
+    font-family: "Jaro", sans-serif;
+    font-size: clamp(26px, 2vw, 34px);
+}
+
+h2 {
+    font-family: "Jaro", sans-serif;
+    font-size: clamp(24px, 2vw, 32px);
+}
+
+h3 {
+    font-family: "Jaro", sans-serif;
+    font-size: clamp(18px, 2vw, 26px);
+}    
+
+h4 {
+    font-family: "Jaro", sans-serif;
+    font-size: clamp(14px, 2vw, 22px);
+}
   
 .d_none {
     display: none;

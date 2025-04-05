@@ -13,6 +13,7 @@ function init() {
   renderHead();
   renderBasket();
   renderContent();
+  loadFromLocalStorage();
 }
 
 function renderHead() {
@@ -21,6 +22,11 @@ function renderHead() {
 
 function renderBasket() {
   basketRef.innerHTML += getBasketTemplate();
+  let emptyBasketRef = document.getElementById('basket_items')
+  console.log(basket)
+  if(basket.length === 0){
+    emptyBasketRef.innerHTML = getEmptyBasketTemplate();
+  }
 }
 
 function renderContent() {
@@ -53,7 +59,7 @@ function addToBasket(event) {
 
 function renderBasketItem(name, price){
   let existItem = basket.find(item => item.name === name);
-
+  
   if (existItem){
     existItem.amount++;
     let sumPrice = existItem.amount * price
@@ -76,17 +82,18 @@ function updateBasket(){
   })
   basketPrice = summary
   renderBasketSummary(summary)
+  localStorage.setItem('basketValues', JSON.stringify(basket))
 }
 
-function increaseItem(){
+function increaseItem(event){
+  let btnRef = event.srcElement.id
+}
+
+function reduceItem(event){
 
 }
 
-function reduceItem(){
-
-}
-
-function deleteItem(){
+function deleteItem(event){
 
 }
 
@@ -109,7 +116,20 @@ function orderBasket(event) {
 
 function closeOrderBasket(){
   alertRef.classList.add("d_none");
-  basket.pop()
+  basket = [];
   updateBasket()
-  console.log(basket)
+  document.body.style.overflow = "visible";
 }
+
+function loadFromLocalStorage(){
+  let basketValues = JSON.parse(localStorage.getItem("basketValues"))
+  console.log(basketValues)
+  if(basketValues !== null){
+    basket = basketValues
+    console.log(basket)
+    console.log("es hat geklappt aber irgendwas ist falsch")
+  }else{
+    console.log("du musst das schaffen! dussel")
+  }
+}
+
