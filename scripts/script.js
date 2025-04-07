@@ -72,19 +72,23 @@ function updateBasket() {
     itemsRef.innerHTML = getEmptyBasketTemplate();
     renderRespBasket();
   } else {
-    let summary = 0;
-    let totalAmount = 0;
-    basket.forEach((item) => {
-      item.price = item.basePrice * item.amount;
-      itemsRef.innerHTML += getItemTemplate(item.amount, item.name, item.price);
-      summary += item.price;
-      totalAmount += item.amount;
-    });
-    basketPrice = summary;
-    summaryRef.innerHTML = getSummaryTemplate(summary);
-    updateRespButton(totalAmount);
+    updateBasketElse(itemsRef, summaryRef);
   }
   localStorage.setItem("basketValues", JSON.stringify(basket));
+}
+
+function updateBasketElse(itemsRef, summaryRef) {
+  let summary = 0;
+  let totalAmount = 0;
+  basket.forEach((item) => {
+    item.price = item.basePrice * item.amount;
+    itemsRef.innerHTML += getItemTemplate(item.amount, item.name, item.price);
+    summary += item.price;
+    totalAmount += item.amount;
+  });
+  basketPrice = summary;
+  summaryRef.innerHTML = getSummaryTemplate(summary);
+  updateRespButton(totalAmount);
 }
 
 function renderRespBasket() {
