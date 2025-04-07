@@ -146,7 +146,8 @@ function reduceItem(event) {
 }
 
 function deleteItem(event) {
-  let itemID = event.target.id;
+  let button = event.currentTarget;
+  let itemID = button.id
   let index = basket.findIndex((item) => item.name === itemID);
 
   if (index > -1) {
