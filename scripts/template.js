@@ -111,11 +111,25 @@ function getAlertTemplate(totalPrice) {
       `;
 }
 
-function getRespBasketTemplate(totalAmount) {
+function getRespBasketButtonTemplate(totalAmount) {
   return /*HTML*/ `
           <div class="resp_basket_btn" onclick="respBasketOverlay(event)">
-              <span>Warenkorb&nbsp;</span>
-              ${totalAmount ? `<span>(${totalAmount})</span>` : ""}
+              <span>Warenkorb&nbsp(${totalAmount})</span>
           </div>
+      `;
+}
+
+function getRespBasketTemplate() {
+  return /*HTML*/ `
+          <div id="resp_basket_complete" class="basket">
+              <div  class="basket_header">
+                  <h1>Warenkorb</h1>
+                  <div class="basket_underline"></div>          
+              </div>
+              <div class="basket_dishes" id="resp_basket_items">
+              </div>
+              <div class="basket_summary" id="resp_basket_summary">
+              </div>
+          </div>  
       `;
 }

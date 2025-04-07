@@ -3,8 +3,9 @@ let navigationRef = document.getElementById("nav_bar");
 let contentRef = document.getElementById("content");
 let basketRef = document.getElementById("basket_wrapper");
 let alertRef = document.getElementById("alert_dialog");
-let respBasketRef = document.getElementById("resp_basket");
-let respBasketBtnRef = document.getElementById("resp_basket_btn");
+let respBasketRef = document.getElementById("resp_basket_wrapper");
+let respBasketBtnRef = document.getElementById("resp_basket_btn_wrapper");
+let respBasketOverlayRef = document.getElementById("resp_basket_overlay");
 let basket = [];
 let basketPrice = 0;
 
@@ -20,11 +21,8 @@ function renderHead() {
 }
 
 function renderBasket() {
-  basketRef.innerHTML += getBasketTemplate();
-}
-
-function renderRespBasket(totalAmount){
-  respBasketBtnRef.innerHTML = getRespBasketTemplate(totalAmount)
+  basketRef.innerHTML = getBasketTemplate();
+  respBasketOverlayRef.innerHTML = getRespBasketTemplate();
 }
 
 function renderContent() {
@@ -67,29 +65,61 @@ function renderBasketItem(name, price) {
   updateBasket();
 }
 
-function updateBasket() {
-  let itemRef = document.getElementById("basket_items");
+function updateDeskBasket() {
+  let itemsRef = document.getElementById("basket_items");
   let summaryRef = document.getElementById("basket_summary");
-  itemRef.innerHTML = "";
+  itemsRef.innerHTML = "";
   summaryRef.innerHTML = "";
-
   if (basket.length === 0) {
-    itemRef.innerHTML = getEmptyBasketTemplate();
+    itemsRef.innerHTML = getEmptyBasketTemplate();
   } else {
     let summary = 0;
     let totalAmount = 0;
     basket.forEach((item) => {
       item.price = item.basePrice * item.amount;
-      console.log(item.price)
-      itemRef.innerHTML += getItemTemplate(item.amount, item.name, item.price);
+      itemsRef.innerHTML += getItemTemplate(item.amount, item.name, item.price);
       summary += item.price;
       totalAmount += item.amount;
     });
     basketPrice = summary;
-    renderBasketSummary(summary);
-    renderRespBasket(totalAmount);
+    summaryRef.innerHTML = getSummaryTemplate(summary);
   }
+}
+
+function updateRespBasket() {
+  const itemsRef = document.getElementById("resp_basket_items");
+  const summaryRef = document.getElementById("resp_basket_summary");
+  itemsRef.innerHTML = "";
+  summaryRef.innerHTML = "";
+  let totalAmount = 0;
+  if (basket.length === 0) {
+    totalAmount = 0;
+  } else {
+    let summary = 0;
+    basket.forEach((item) => {
+      item.price = item.basePrice * item.amount;
+      itemsRef.innerHTML += getItemTemplate(item.amount, item.name, item.price);
+      summary += item.price;
+      totalAmount += item.amount;
+    });
+    basketPrice = summary;
+    summaryRef.innerHTML = getSummaryTemplate(summary);
+  }
+  updateRespButton(totalAmount);
+}
+
+function updateBasket() {
+  updateRespBasket();
+  updateDeskBasket();
   localStorage.setItem("basketValues", JSON.stringify(basket));
+}
+
+function updateRespButton(totalAmount) {
+  if (totalAmount >= 1) {
+    respBasketBtnRef.innerHTML = getRespBasketButtonTemplate(totalAmount);
+  } else {
+    respBasketBtnRef.innerHTML = "";
+  }
 }
 
 function increaseItem(event) {
@@ -117,17 +147,12 @@ function reduceItem(event) {
 
 function deleteItem(event) {
   let itemID = event.target.id;
-  let index = basket.findIndex(item => item.name === itemID);
-  
+  let index = basket.findIndex((item) => item.name === itemID);
+
   if (index > -1) {
     basket.splice(index, 1);
     updateBasket();
   }
-}
-
-function renderBasketSummary(totalPrice) {
-  let summaryRef = document.getElementById("basket_summary");
-  summaryRef.innerHTML = getSummaryTemplate(totalPrice);
 }
 
 function updateFormat(inputFormat) {
@@ -138,16 +163,31 @@ function updateFormat(inputFormat) {
 function orderBasket(event) {
   alertRef.classList.remove("d_none");
   alertRef.innerHTML = getAlertTemplate(basketPrice);
+  respBasketRef.classList.add("d_none");
   document.body.style.overflow = "hidden";
   localStorage.removeItem("basketValues");
 }
 
 function closeOrderBasket() {
   alertRef.classList.add("d_none");
+  respBasketRef.classList.add("d_none");
   document.body.style.overflow = "visible";
   basket = [];
   basketPrice = 0;
   updateBasket();
+}
+function respBasketOverlay(event) {
+  respBasketRef.classList.remove("d_none");
+  document.body.style.overflow = "hidden";
+}
+
+function closeRespBasket(event) {
+  respBasketRef.classList.add("d_none");
+  document.body.style.overflow = "visible";
+}
+
+function bubblingProtection(event) {
+  event.stopPropagation();
 }
 
 function loadFromLocalStorage() {

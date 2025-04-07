@@ -1,9 +1,13 @@
-@media (min-width:901px){
-    .resp_basket_btn_wrapper{
+@media (min-width:901px) {
+    .basket_wrapper {
+        display: flex;
+    }
+
+    .resp_basket_btn_wrapper {
         display: none;
     }
 
-    .resp_basket_wrapper_overlay{
+    .resp_basket_wrapper {
         display: none;
     }
 }
@@ -29,5 +33,7 @@
         bottom: 8px;
     }
 
-
+    .basket_dishes {
+        height: 50vh;
+    }
 }

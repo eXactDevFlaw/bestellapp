@@ -48,7 +48,7 @@ body {
     margin-bottom: 8px;
 }
 
-.nav_bar_btn:hover{
+.nav_bar_btn:hover {
     cursor: pointer;
     text-decoration: underline;
 }
@@ -91,7 +91,7 @@ body {
     padding: 8px;
 }
 
-.dish h3{
+.dish h3 {
     margin-block-start: 8px;
     margin-block-end: 8px;
 }
@@ -116,7 +116,7 @@ body {
     border-radius: 16px;
 }
 
-.alert_dialog button:hover{
+.alert_dialog button:hover {
     background: linear-gradient(to bottom, rgba(200, 200, 200, 0.7) 5%, #ffffff 100%);
     background-color: rgba(200, 200, 200, 0.7);
     border: 1px solid;
@@ -124,14 +124,12 @@ body {
 }
 
 .alert {
-    display: flex;
-    align-items: center;
-    justify-content: center;
     background-color: rgb(255, 127, 0);
     display: flex;
-    align-items: center;
     flex-direction: column;
-    margin-top: 155px;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
     border-radius: 50px;
     height: 350px;
     width: clamp(200px, 80vw, 600px);

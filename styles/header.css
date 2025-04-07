@@ -6,7 +6,7 @@ header {
     background-color: rgb(255, 127, 0);
 }
 
-.header_img{
+.header_img {
     margin-left: 25px;
     height: clamp(50px, 85px, 120px);
 }

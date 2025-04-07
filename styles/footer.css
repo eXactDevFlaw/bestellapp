@@ -15,12 +15,12 @@ footer a {
     cursor: pointer;
 }
 
-footer a:hover{
+footer a:hover {
     transition: 150ms;
     text-decoration: underline;
 }
 
-.footer_break{
+.footer_break {
     margin-left: 8px;
     margin-right: 8px;
 }
