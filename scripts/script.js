@@ -5,7 +5,6 @@ let basketRef = document.getElementById("basket_wrapper");
 let alertRef = document.getElementById("alert_dialog");
 let respBasketRef = document.getElementById("resp_basket_wrapper");
 let respBasketBtnRef = document.getElementById("resp_basket_btn_wrapper");
-let respBasketOverlayRef = document.getElementById("resp_basket_overlay");
 let basket = [];
 let basketPrice = 0;
 
@@ -22,7 +21,6 @@ function renderHead() {
 
 function renderBasket() {
   basketRef.innerHTML = getBasketTemplate();
-  respBasketOverlayRef.innerHTML = getRespBasketTemplate();
 }
 
 function renderContent() {
@@ -65,13 +63,14 @@ function renderBasketItem(name, price) {
   updateBasket();
 }
 
-function updateDeskBasket() {
+function updateBasket() {
   let itemsRef = document.getElementById("basket_items");
   let summaryRef = document.getElementById("basket_summary");
   itemsRef.innerHTML = "";
   summaryRef.innerHTML = "";
   if (basket.length === 0) {
     itemsRef.innerHTML = getEmptyBasketTemplate();
+    renderRespBasket();
   } else {
     let summary = 0;
     let totalAmount = 0;
@@ -83,35 +82,15 @@ function updateDeskBasket() {
     });
     basketPrice = summary;
     summaryRef.innerHTML = getSummaryTemplate(summary);
+    updateRespButton(totalAmount);
   }
-}
-
-function updateRespBasket() {
-  const itemsRef = document.getElementById("resp_basket_items");
-  const summaryRef = document.getElementById("resp_basket_summary");
-  itemsRef.innerHTML = "";
-  summaryRef.innerHTML = "";
-  let totalAmount = 0;
-  if (basket.length === 0) {
-    totalAmount = 0;
-  } else {
-    let summary = 0;
-    basket.forEach((item) => {
-      item.price = item.basePrice * item.amount;
-      itemsRef.innerHTML += getItemTemplate(item.amount, item.name, item.price);
-      summary += item.price;
-      totalAmount += item.amount;
-    });
-    basketPrice = summary;
-    summaryRef.innerHTML = getSummaryTemplate(summary);
-  }
-  updateRespButton(totalAmount);
-}
-
-function updateBasket() {
-  updateRespBasket();
-  updateDeskBasket();
   localStorage.setItem("basketValues", JSON.stringify(basket));
+}
+
+function renderRespBasket() {
+  if (window.innerWidth < 900) {
+    basketRef.classList.add("d_none");
+  }
 }
 
 function updateRespButton(totalAmount) {
@@ -147,7 +126,7 @@ function reduceItem(event) {
 
 function deleteItem(event) {
   let button = event.currentTarget;
-  let itemID = button.id
+  let itemID = button.id;
   let index = basket.findIndex((item) => item.name === itemID);
 
   if (index > -1) {
@@ -164,27 +143,21 @@ function updateFormat(inputFormat) {
 function orderBasket(event) {
   alertRef.classList.remove("d_none");
   alertRef.innerHTML = getAlertTemplate(basketPrice);
-  respBasketRef.classList.add("d_none");
-  document.body.style.overflow = "hidden";
+  document.body.classList.add("no_scroll");
   localStorage.removeItem("basketValues");
 }
 
 function closeOrderBasket() {
   alertRef.classList.add("d_none");
-  respBasketRef.classList.add("d_none");
-  document.body.style.overflow = "visible";
+  document.body.classList.toggle("no_scroll");
   basket = [];
   basketPrice = 0;
   updateBasket();
+  updateRespButton(0);
 }
 function respBasketOverlay(event) {
-  respBasketRef.classList.remove("d_none");
-  document.body.style.overflow = "hidden";
-}
-
-function closeRespBasket(event) {
-  respBasketRef.classList.add("d_none");
-  document.body.style.overflow = "visible";
+  basketRef.classList.toggle("d_none");
+  document.body.classList.toggle("no_scroll");
 }
 
 function bubblingProtection(event) {

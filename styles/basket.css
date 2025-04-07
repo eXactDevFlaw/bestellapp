@@ -16,8 +16,39 @@
     border: 2px solid rgba(200, 200, 200, 0.7);
 }
 
+.basket_header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
 .basket h1 {
     text-align: center;
+}
+
+.basket_close_btn {
+    height: 40px;
+    width: 40px;
+    background-color: rgb(255, 127, 0);
+    font-size: 24px;
+    border: 1px solid rgb(200, 200, 200);
+    color: white;
+    cursor: pointer;
+    border-radius: 50%;
+    margin-left: 8px;
+    margin-right: 8px;
+}
+
+.basket_close_btn:hover {
+    background: linear-gradient(to bottom, #f6f6f6 5%, #ffffff 100%);
+    background-color: rgba(200, 200, 200, 0.7);
+    border: 1px solid;
+    color: rgb(255, 127, 0);
+}
+
+.basket_close_btn:active {
+    position: relative;
+    top: 1px;
 }
 
 .basket_dishes {

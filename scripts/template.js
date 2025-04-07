@@ -50,9 +50,12 @@ function getItemsTemplate(item) {
 function getBasketTemplate() {
   return /*HTML*/ `
           <div id="basket_complete" class="basket">
-              <div  class="basket_header">
+              <div>
+                <div class="basket_header">
                   <h1>Warenkorb</h1>
-                  <div class="basket_underline"></div>          
+                  <button class="basket_close_btn" onclick="respBasketOverlay(event)">X</button>
+                </div>
+                <div class="basket_underline"></div>          
               </div>
               <div class="basket_dishes" id="basket_items">
               </div>
@@ -116,20 +119,5 @@ function getRespBasketButtonTemplate(totalAmount) {
           <div class="resp_basket_btn" onclick="respBasketOverlay(event)">
               <span>Warenkorb&nbsp(${totalAmount})</span>
           </div>
-      `;
-}
-
-function getRespBasketTemplate() {
-  return /*HTML*/ `
-          <div id="resp_basket_complete" class="basket">
-              <div  class="basket_header">
-                  <h1>Warenkorb</h1>
-                  <div class="basket_underline"></div>          
-              </div>
-              <div class="basket_dishes" id="resp_basket_items">
-              </div>
-              <div class="basket_summary" id="resp_basket_summary">
-              </div>
-          </div>  
       `;
 }

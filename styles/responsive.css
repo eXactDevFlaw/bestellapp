@@ -10,11 +10,19 @@
     .resp_basket_wrapper {
         display: none;
     }
+
+    .basket_close_btn {
+        display: none;
+    }
 }
 
 @media (max-width: 900px) {
     .basket_wrapper {
-        display: none;
+        position: fixed;
+    }
+
+    .basket {
+        height: 80vh;
     }
 
     .content_wrapper {
